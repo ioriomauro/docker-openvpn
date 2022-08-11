@@ -1,14 +1,27 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
-
-# Smallest base image
+# Original credit: https://github.com/kylemanna/docker-openvpn
 FROM alpine:latest
 
-LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
+LABEL maintainer="Mauro Iorio <iorio.mauro@gmail.com>"
 
-# Testing: pamtester
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester libqrencode && \
-    ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
+# edge/testing: pamtester
+RUN set -ue && \
+    apk add --no-cache --update --upgrade \
+        --repository 'https://dl-cdn.alpinelinux.org/alpine/edge/testing/' \
+        openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator \
+        pamtester libqrencode && \
+    ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin
+
+ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
+
+# Add support for OTP authentication using a PAM module
+ADD ./otp/openvpn /etc/pam.d/
+
+# Cleanup
+RUN apk cache \
+        --repository 'https://dl-cdn.alpinelinux.org/alpine/edge/testing/' \
+        clean; \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
 # Needed by scripts
@@ -19,13 +32,6 @@ ENV EASYRSA=/usr/share/easy-rsa \
 
 VOLUME ["/etc/openvpn"]
 
-# Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
 EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
-
-ADD ./bin /usr/local/bin
-RUN chmod a+x /usr/local/bin/*
-
-# Add support for OTP authentication using a PAM module
-ADD ./otp/openvpn /etc/pam.d/
