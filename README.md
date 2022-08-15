@@ -1,10 +1,11 @@
 # OpenVPN for Docker
 
-[![Build Status](https://travis-ci.org/ioriomauro/docker-openvpn.svg)](https://travis-ci.org/ioriomauro/docker-openvpn)
+<!-- [![Build Status](https://travis-ci.org/ioriomauro/docker-openvpn.svg)](https://travis-ci.org/ioriomauro/docker-openvpn) -->
 [![Docker Stars](https://img.shields.io/docker/stars/ioriomauro/openvpn.svg)](https://hub.docker.com/r/ioriomauro/openvpn/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/ioriomauro/openvpn.svg)](https://hub.docker.com/r/ioriomauro/openvpn/)
-[![ImageLayers](https://images.microbadger.com/badges/image/ioriomauro/openvpn.svg)](https://microbadger.com/#/images/ioriomauro/openvpn)
+<!-- [![ImageLayers](https://images.microbadger.com/badges/image/ioriomauro/openvpn.svg)](https://microbadger.com/#/images/ioriomauro/openvpn) -->
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fioriomauro%2Fdocker-openvpn.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fioriomauro%2Fdocker-openvpn?ref=badge_shield)
+[![Maintenance Activity](https://img.shields.io/maintenance/yes/2022)](https://github.com/ioriomauro/docker-openvpn)
 
 OpenVPN server in a Docker container complete with an EasyRSA PKI CA.
 
