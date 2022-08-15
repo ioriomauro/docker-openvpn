@@ -12,12 +12,6 @@ RUN set -ue && \
         pamtester libqrencode && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin
 
-ADD ./bin /usr/local/bin
-RUN chmod a+x /usr/local/bin/*
-
-# Add support for OTP authentication using a PAM module
-ADD ./otp/openvpn /etc/pam.d/
-
 # Cleanup
 RUN apk cache \
         --repository 'https://dl-cdn.alpinelinux.org/alpine/edge/testing/' \
@@ -34,4 +28,14 @@ VOLUME ["/etc/openvpn"]
 
 EXPOSE 1194/udp
 
-CMD ["ovpn_run"]
+ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
+
+# Add support for OTP authentication using a PAM module
+ADD ./otp/openvpn /etc/pam.d/
+
+ADD docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod a+x /docker-entrypoint.sh
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD ["run"]

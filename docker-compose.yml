@@ -1,0 +1,30 @@
+services:
+
+  server:
+    image: ioriomauro/openvpn:latest
+    hostname: ovpn-server
+    container_name: ovpn-server
+    ports:
+      - "1194:1194/udp"
+    environment:
+      PUBLIC_DNS: myvpn.example.org
+    command: run
+    cap_add:
+      - "NET_ADMIN"
+    volumes:
+      - /opt/docker-volumes/ovpn_server:/etc/openvpn
+    restart: unless-stopped
+
+  gen_client:
+    profiles:
+      - client
+      - all
+    image: ioriomauro/openvpn:latest
+    command: new_client "${CLIENT_NAME}"
+    volumes:
+      - /opt/docker-volumes/ovpn_client:/ovpn_client
+    volumes_from:
+      - "server"
+    logging:
+      driver: none
+    restart: never
