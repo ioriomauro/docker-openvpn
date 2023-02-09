@@ -1,12 +1,11 @@
 #!/bin/sh
 set -ue
 
-if [ "$DEBUG" = "1" ]; then
+if [ "${DEBUG:-0}" -eq 1 ]; then
   set -x
 fi
 
 DEFAULT_PUBLIC_PORT=1194
-DEFAULT_REQ_CN="Default OpenVPN CA"
 DEFAULT_CA_EXPIRE=3650
 DEFAULT_CERT_EXPIRE=825
 
@@ -18,7 +17,7 @@ if [ ! -f /etc/openvpn/openvpn.conf ] && [ ! -d /etc/openvpn/pki ]; then
     echo '*****     STARTING ONE-TIME SETUP     *****'
     echo '*******************************************'
     ovpn_genconfig -u "udp://${PUBLIC_DNS}:${PUBLIC_PORT:-$DEFAULT_PUBLIC_PORT}"
-    EASYRSA_BATCH=1 EASYRSA_REQ_CN="${REQ_CN:-$DEFAULT_REQ_CN}" ovpn_initpki nopass
+    EASYRSA_BATCH=1 ovpn_initpki nopass
 fi
 
 CMD="${1:-}"
