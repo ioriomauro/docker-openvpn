@@ -10,8 +10,8 @@ DEFAULT_REQ_CN="Default OpenVPN CA"
 DEFAULT_CA_EXPIRE=3650
 DEFAULT_CERT_EXPIRE=825
 
-export EASYRSA_CA_EXPIRE="${DEFAULT_CA_EXPIRE}"
-export EASYRSA_CERT_EXPIRE="${DEFAULT_CERT_EXPIRE}"
+export EASYRSA_CA_EXPIRE="${CA_EXPIRE:-$DEFAULT_CA_EXPIRE}"
+export EASYRSA_CERT_EXPIRE="${CERT_EXPIRE:-$DEFAULT_CERT_EXPIRE}"
 
 if [ ! -f /etc/openvpn/openvpn.conf ] && [ ! -d /etc/openvpn/pki ]; then
     echo '*******************************************'
