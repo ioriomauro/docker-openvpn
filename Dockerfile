@@ -1,6 +1,6 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 # Original credit: https://github.com/kylemanna/docker-openvpn
-FROM alpine:latest
+FROM alpine:3.17
 
 LABEL maintainer="Mauro Iorio <iorio.mauro@gmail.com>"
 
